@@ -1,0 +1,23 @@
+# Local .terraform directories and plugins
+**/.terraform/*
+
+# .tfstate files (These contain your actual cloud architecture and secrets!)
+*.tfstate
+*.tfstate.*
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Ignore any .tfvars files (This is where you will put your passwords later)
+*.tfvars
+*.tfvars.json
+
+# Ignore override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# OS generated files
+.DS_Store
