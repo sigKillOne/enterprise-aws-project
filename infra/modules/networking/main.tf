@@ -103,3 +103,39 @@ resource "aws_route_table_association" "private_assoc" {
   subnet_id      = aws_subnet.private_subnet.id
   route_table_id = aws_route_table.private_rt.id
 }
+
+# 9. Second Public Subnet (Required for the Load Balancer)
+resource "aws_subnet" "public_subnet_2" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.3.0/24"
+  availability_zone       = "ap-south-1b" # Different zone!
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "enterprise-public-subnet-2"
+  }
+}
+
+# 10. Route Table Association for the second public subnet
+resource "aws_route_table_association" "public_assoc_2" {
+  subnet_id      = aws_subnet.public_subnet_2.id
+  route_table_id = aws_route_table.public_rt.id
+}
+
+# 11. Second Private Subnet (Required for RDS Database Subnet Group)
+resource "aws_subnet" "private_subnet_2" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.4.0/24"
+  availability_zone       = "ap-south-1b" # Different Zone!
+  map_public_ip_on_launch = false
+
+  tags = {
+    Name = "enterprise-private-subnet-2"
+  }
+}
+
+# 12. Route Table Association for the second private subnet
+resource "aws_route_table_association" "private_assoc_2" {
+  subnet_id      = aws_subnet.private_subnet_2.id
+  route_table_id = aws_route_table.private_rt.id
+}

@@ -28,14 +28,14 @@ resource "aws_security_group" "postgres_sg" {
 # 2. DB Subnet Group (Tells RDS which subnets it is allowed to use)
 resource "aws_db_subnet_group" "postgres_subnet_group" {
   name       = "enterprise-db-subnet-group"
-  subnet_ids = [var.private_subnet_id]
+  subnet_ids = [var.private_subnet_id, var.private_subnet_2_id]
 }
 
 # 3. The Actual RDS Instance
 resource "aws_db_instance" "postgres" {
   identifier             = "enterprise-postgres"
   engine                 = "postgres"
-  engine_version         = "15.4"
+  engine_version         = "16"
   instance_class         = "db.t3.micro" # Smallest, cheapest instance type
   allocated_storage      = 20
   username               = "dbadmin"
@@ -76,7 +76,7 @@ resource "aws_security_group" "redis_sg" {
 # 5. Cache Subnet Group
 resource "aws_elasticache_subnet_group" "redis_subnet_group" {
   name       = "enterprise-redis-subnet-group"
-  subnet_ids = [var.private_subnet_id]
+  subnet_ids = [var.private_subnet_id, var.private_subnet_2_id]
 }
 
 # 6. The Actual ElastiCache Cluster
